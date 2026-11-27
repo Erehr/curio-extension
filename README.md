@@ -104,7 +104,7 @@ Under **Options › Site rules**, define ordered top-to-bottom rules (matching *
 
 ## Page Attributes
 
-Pages and userscripts can annotate elements (or any ancestor, with `<meta name="curio:<name>" content="…">` as fallback) so *Send to Curio* captures higher-resolution sources and structured metadata automatically:
+Pages can annotate elements (or any ancestor, with `<meta name="curio:<name>" content="…">` as fallback) so *Send to Curio* captures higher-resolution sources and structured metadata automatically:
 
 | Attribute | Value | Effect |
 |---|---|---|
@@ -133,7 +133,7 @@ for (const img of document.querySelectorAll('article img')) {
 }
 ```
 
-> **Security**: Attributes are untrusted page data. Destinations are only followed when a Site rule explicitly enables *Use page destination*, unknown folders are only created when *Let pages create folders* is enabled with `organize`, cross-site attribute URLs never receive cookies, and local/LAN URLs are rejected. See the full [Browser markup specification](https://erehr.github.io/curio/api/connect/browser-markup/) and downloadable [`curio-attributes.user.js`](https://erehr.github.io/curio/assets/userscripts/curio-attributes.user.js) template in Curio's documentation.
+> **Security**: Attributes are untrusted page data. Destinations are only followed when a Site rule explicitly enables *Use page destination*, unknown folders are only created when *Let pages create folders* is enabled with `organize`, cross-site attribute URLs never receive cookies, and local/LAN URLs are rejected. See the full [Browser markup specification](https://erehr.github.io/curio/api/connect/browser-markup/) in Curio's documentation.
 
 ---
 
@@ -149,7 +149,7 @@ for (const img of document.querySelectorAll('article img')) {
 | **Min image size (px)** | `48` | Ignores images smaller than this threshold in both dimensions. |
 | **Disabled sites / Drag disabled on** | Empty | Disable page inspection or drag capture on specific hostnames. |
 | **Send site cookies / Download through browser** | Off | Opt-in cookie forwarding or browser-side byte fetching for signed-in sites. |
-| **Read `eagle-*` attributes** | On | Fallback compatibility with existing Eagle userscripts. |
+| **Read `eagle-*` attributes** | On | Fallback compatibility with pages marked up for Eagle. |
 | **Let pages create folders / Library aliases** | Off / Empty | Allow `data-curio-folders` creation (with `organize`) and map portable alias names to local libraries. |
 
 ---
@@ -182,7 +182,7 @@ Tests and tooling expect Curio's app checkout at `../app` (override with `CURIO_
 
 ### Firefox Status
 
-Not built yet. Moving to Firefox MV3 requires adapting the offscreen document to a DOM event page, `side_panel` to `sidebar_action`, and `browser_specific_settings.gecko.id` (Curio's pairing already accepts `moz-extension://<UUID>` origins). Firefox users can use the standalone [`send-to-curio.user.js`](https://erehr.github.io/curio/features/import/browser/#userscript) userscript in Violentmonkey or Tampermonkey in the meantime.
+Not built yet. Moving to Firefox MV3 requires adapting the offscreen document to a DOM event page, `side_panel` to `sidebar_action`, and `browser_specific_settings.gecko.id` (Curio's pairing already accepts `moz-extension://<UUID>` origins).
 
 </details>
 
