@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Eagle fixtures</title><meta name="curio:rating" content="1"><script src="fixture.js"></script></head>
+<body>
+<h1>Eagle's attributes, read as a fallback</h1>
+<img data-case="eagle" src="/png?w=30&h=30&c=333333" alt="small"
+  eagle-src="/png?w=88&h=88&c=885500" eagle-title="Eagle title" eagle-link="https://example.org/eagle" eagle-annotation="Eagle notes" eagle-tags="e one, e two"
+  data-expect='{"name":"Eagle title","width":88,"url":"https://example.org/eagle","notes":"Eagle notes","tags":["e one","e two"]}'>
+<img data-case="meta" src="/png?w=34&h=34&c=338833" alt="Meta tagged" data-expect='{"name":"Meta tagged","rating":1}'>
+</body>
+</html>

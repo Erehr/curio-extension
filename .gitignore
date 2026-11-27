@@ -1,0 +1,4 @@
+/target/
+/node_modules/
+# the internal changelog, never published
+/CHANGELOG.md

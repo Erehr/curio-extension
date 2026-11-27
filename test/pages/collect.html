@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Collect fixtures</title>
+  <script src="fixture.js"></script>
+  <style>
+    body { margin: 0; font: 14px system-ui, sans-serif; }
+    #pic { position: absolute; left: 40px; top: 40px; width: 300px; height: 200px; }
+    #lnk { position: absolute; left: 40px; top: 280px; font-size: 20px; }
+    #block { position: absolute; left: 600px; top: 40px; width: 200px; height: 150px; background: #c83232; }
+  </style>
+</head>
+<body>
+  <!-- saved by the page's own gestures: Alt+click, the drop zone, the button on pictures, the shortcuts and screenshots -->
+  <img id="pic" alt="Collect picture">
+  <a id="lnk" href="/about.html">About this</a>
+  <div id="block"></div>
+  <script>
+    // a picture of its own for each address, so each part of tools/ext.mjs saves a new file
+    document.getElementById('pic').src = '/png?w=300&h=200&c=336699&k=' + encodeURIComponent(location.search)
+    window.__clicks = 0
+    document.addEventListener('click', () => window.__clicks++)
+  </script>
+</body>
+</html>

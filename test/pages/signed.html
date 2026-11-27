@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Signed-in fixtures</title><script src="fixture.js"></script></head>
+<body>
+<h1>Pictures that need the page's cookie or Referer</h1>
+<img data-case="cookie" data-expect='{"name":"Members only","width":40}' src="/gated.png" alt="Members only">
+<img data-case="referer" data-expect='{"name":"No hotlinking","width":44}' src="/hotlink.png" alt="No hotlinking">
+</body>
+</html>

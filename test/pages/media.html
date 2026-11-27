@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Media fixtures</title><script src="fixture.js"></script>
+<style>body { font: 14px sans-serif; } .cell { display: inline-block; margin: 10px; vertical-align: top; } #bg { width: 120px; height: 90px; background: url(/png?w=120&h=90&c=aa5500) center / cover; } .overlay-wrap { position: relative; width: 100px; height: 100px; } .overlay-wrap .cover { position: absolute; inset: 0; } #empty { height: 60px; }</style>
+</head>
+<body>
+<h1>Media</h1>
+<div class="cell"><img data-case="plain" data-expect='{"name":"Blue square","ext":"png","width":64}' src="/png?w=64&h=64&c=2244ff" alt="Blue square"></div>
+<div class="cell"><img data-case="srcset" data-expect='{"name":"Responsive","ext":"png","width":256}' src="/png?w=64&h=64&c=00aa00" srcset="/png?w=64&h=64&c=00aa00 64w, /png?w=256&h=256&c=00aa00 256w, /png?w=128&h=128&c=00aa00 128w" sizes="64px" width="64" alt="Responsive"></div>
+<div class="cell"><picture><source srcset="/png?w=200&h=100&c=aa00aa 200w, /png?w=400&h=200&c=aa00aa 400w" sizes="100px"><img data-case="picture" data-expect='{"name":"Picture element","width":400}' src="/png?w=100&h=50&c=aa00aa" width="100" alt="Picture element"></picture></div>
+<div class="cell"><div id="bg" data-case="background" data-expect='{"ext":"png","width":120}'></div></div>
+<div class="cell"><video data-case="stream" data-expect='{"kind":"link","url":"page","name":"Media fixtures"}' src="/live.m3u8" width="160" height="90" muted></video></div>
+<div class="cell"><video id="mse" data-case="msestream" data-expect='{"kind":"link","url":"page","name":"Media fixtures"}' width="160" height="90" muted></video><script>document.getElementById('mse').src = URL.createObjectURL(new MediaSource())</script></div>
+<div class="cell"><svg data-case="svg" data-expect='{"ext":"svg"}' width="80" height="80" viewBox="0 0 80 80"><title>Circle</title><circle cx="40" cy="40" r="30" fill="tomato"/></svg></div>
+<div class="cell"><canvas data-case="canvas" data-expect='{"ext":"png","width":90}' width="90" height="60"></canvas></div>
+<div class="cell"><img id="blobImg" data-case="blob" data-expect='{"name":"Made in the page","ext":"png","width":50}' alt="Made in the page"></div>
+<div class="cell"><audio data-case="audio" data-expect='{"ext":"wav"}' src="/tone.wav" controls title="Tone"></audio></div>
+<div class="cell overlay-wrap"><img data-case="overlay" data-point=".cover" data-expect='{"name":"Under a cover","width":100}' src="/png?w=100&h=100&c=777700" alt="Under a cover"><div class="cover"></div></div>
+<div class="cell"><a data-case="link" data-expect='{"name":"A page about it","kind":"link","url":"http://127.0.0.1:8791/about.html"}' href="/about.html">A page about it</a></div>
+<div class="cell"><a href="/about.html"><img data-case="inlink" data-expect='{"name":"Linked picture","width":48,"url":"http://127.0.0.1:8791/about.html"}' src="/png?w=48&h=48&c=005555" alt="Linked picture"></a></div>
+<div class="cell" id="shadowHost"></div>
+<div class="cell"><img data-case="broken" data-expect='{"state":"failed"}' src="/broken.png" width="60" height="60" alt="Missing picture"></div>
+<div id="empty" data-case="page" data-expect='{"name":"Media fixtures","kind":"link","url":"page","fresh":true}'></div>
+<script>
+const c = document.querySelector('canvas').getContext('2d')
+c.fillStyle = '#3a7'
+c.fillRect(0, 0, 90, 60)
+fetch('/png?w=50&h=50&c=ff8800').then((r) => r.blob()).then((b) => (document.getElementById('blobImg').src = URL.createObjectURL(b)))
+const root = document.getElementById('shadowHost').attachShadow({ mode: 'open' })
+root.innerHTML = '<img data-case="shadow" data-expect=\'{"name":"In a shadow root","width":70}\' src="/png?w=70&h=70&c=550055" alt="In a shadow root">'
+</script>
+</body>
+</html>

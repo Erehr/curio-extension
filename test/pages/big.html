@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>A large file</title>
+  <script src="fixture.js"></script>
+  <style>a { display: inline-block; padding: 40px; font: 20px system-ui; }</style>
+</head>
+<body>
+  <!-- 200 MB, past the 44 MB a call carries as base64, so it goes through Curio's upload -->
+  <a href="/big.bin?mb=200" data-case="big" data-curio-type="file" data-curio-title="Big file" data-expect='{"name":"Big file","ext":"bin","library":"Ext second"}'>a large file</a>
+</body>
+</html>

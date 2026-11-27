@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Send to Curio · Options</title>
+  <link rel="stylesheet" href="../panel/panel.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon32.png" alt="" width="20" height="20">
+    <h1>Send to Curio</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Connection</h2>
+      <label>Port <input id="port" type="number" min="1" max="65535"></label>
+      <div class="bar"><span id="connStatus" class="note" role="status"></span><span class="tools"><button id="disconnect" type="button" hidden>Disconnect</button><button id="pair" class="primary" type="button">Connect</button></span></div>
+      <div id="pairCode" class="pair-code" hidden></div>
+      <details>
+        <summary>Other ways</summary>
+        <p class="note">A token from Curio's Settings › API with <b>library.read</b>, <b>metadata.read</b>, <b>metadata.write</b> and <b>files.write</b>; <b>organize</b> adds New folder.</p>
+        <label>Token <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste API token"></label>
+        <div class="bar"><span></span><button id="connect" type="button">Use token</button></div>
+      </details>
+    </section>
+
+    <section>
+      <h2>Pages</h2>
+      <label>Disabled sites <textarea id="off" rows="3" placeholder="example.com"></textarea></label>
+      <label>Min image size (px) <input id="minSize" type="number" min="1" max="2000"></label>
+      <label class="check"><input id="eagle" type="checkbox"> Read eagle-* attributes</label>
+    </section>
+
+    <section>
+      <h2>Panel</h2>
+      <label>Remember folder <select id="rememberFolder"></select></label>
+      <label>Theme <select id="themeMode"></select></label>
+    </section>
+
+    <section>
+      <h2>Collect</h2>
+      <label class="check"><input id="altClick" type="checkbox"> Alt+click to save</label>
+      <label>Mode <select id="mode"></select></label>
+      <label>Drag disabled on <textarea id="dragOff" rows="2" placeholder="example.com"></textarea></label>
+      <div class="row3">
+        <label>Button corner <select id="hoverCorner"><option value="top-right">Top right</option><option value="top-left">Top left</option><option value="bottom-right">Bottom right</option><option value="bottom-left">Bottom left</option></select></label>
+        <label>Button size <input id="hoverSize" type="number" min="20" max="48"></label>
+        <label>Min image size <input id="hoverMin" type="number" min="1" max="4000"></label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Downloads</h2>
+      <label class="check"><input id="cookies" type="checkbox"> Send the site's cookies with a download</label>
+      <label class="check"><input id="browserDownload" type="checkbox"> Download through the browser</label>
+    </section>
+
+    <section>
+      <h2>Queue</h2>
+      <ul id="queue" class="keys"></ul>
+      <div class="bar"><span id="queueTotal" class="note"></span><button id="queueClear" type="button" hidden>Remove all</button></div>
+    </section>
+
+    <section>
+      <div class="bar"><h2>Site rules</h2><button id="addRule" type="button">Add rule</button></div>
+      <p class="note">Rules run top to bottom. The last matching library wins; tags add up.</p>
+      <div id="rules" class="rules"></div>
+    </section>
+
+    <section>
+      <h2>Shortcuts</h2>
+      <ul id="keys" class="keys"></ul>
+      <div class="bar"><span id="keysNote" class="note" role="status"></span><span class="tools"><button id="keysReset" type="button">Reset defaults</button><button id="keysEdit" type="button">Browser shortcuts</button></span></div>
+    </section>
+
+    <section>
+      <h2>Page destinations</h2>
+      <p class="note">Pages can suggest a library and folders with <code>data-curio-library</code> and <code>data-curio-folders</code>. Used only where a site rule allows it.</p>
+      <label class="check"><input id="makeFolders" type="checkbox"> Let pages create folders</label>
+      <label>Library aliases <textarea id="aliases" rows="3" placeholder="refs = Inspiration"></textarea></label>
+      <p class="note">One per line: alias = library.</p>
+    </section>
+    <div class="bar"><span id="saved" class="note" role="status"></span></div>
+  </main>
+  <script src="../curio.js"></script>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

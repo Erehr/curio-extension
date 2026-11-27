@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Attribute fixtures</title><script src="fixture.js"></script></head>
+<body>
+<h1>The attribute contract</h1>
+<!-- this site is followed in the run, so its destination hints are taken -->
+<img data-case="every" src="/png?w=32&h=32&c=111111" alt="thumbnail"
+  data-curio-src="/png?w=96&h=96&c=cc3366"
+  data-curio-title="Every attribute"
+  data-curio-link="https://example.com/source/1"
+  data-curio-annotation="Notes from the page"
+  data-curio-tags='["attr one", "attr two"]'
+  data-curio-rating="3"
+  data-curio-fields='{"ext_artist": "Someone", "not_defined": "dropped"}'
+  data-curio-library="Ext second"
+  data-curio-folders='["Ext/Attributes"]'
+  data-expect='{"library":"Ext second","name":"Every attribute","width":96,"url":"https://example.com/source/1","notes":"Notes from the page","tags":["attr one","attr two"],"rating":3,"fields":{"ext_artist":"Someone"},"folders":["Attributes"]}'>
+
+<div data-curio-tags="card one, card two" data-curio-annotation="From the card">
+  <img data-case="card" src="/png?w=36&h=36&c=226622" curio-title="Short form" data-expect='{"name":"Short form","tags":["card one","card two"],"notes":"From the card","width":36}'>
+</div>
+
+<img data-case="object" src="/png?w=38&h=38&c=662222" data-curio='{"title":"From the object","tags":["obj"],"rating":5}' data-curio-rating="2" data-expect='{"name":"From the object","tags":["obj"],"rating":2}'>
+
+<img data-case="pending" src="/png?w=40&h=40&c=222266" data-curio-pending alt="before" data-expect='{"name":"Filled late","width":40}'>
+
+<a href="/png?w=42&h=42&c=999999" data-case="aslink" data-curio-type="link" data-curio-title="Kept as a link" data-expect='{"name":"Kept as a link","kind":"link","url":"http://127.0.0.1:8791/png?w=42&h=42&c=999999"}'>a picture's address</a>
+
+<div data-case="collectable" data-curio-collectable data-curio-src="/png?w=58&h=58&c=448844" data-curio-title="A marked block" style="width:80px;height:40px;background:#ddd" data-expect='{"name":"A marked block","width":58}'>marked</div>
+<script>
+const p = document.querySelector('[data-case="pending"]')
+p.addEventListener('curio:collect', () => setTimeout(() => {
+  p.dataset.curioTitle = 'Filled late'
+  delete p.dataset.curioPending
+}, 500))
+</script>
+</body>
+</html>

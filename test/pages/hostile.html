@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Hostile fixtures</title><script src="fixture.js"></script></head>
+<body>
+<h1>A page that asks too much</h1>
+<img data-case="unreachable" src="/png?w=46&h=46&c=aa0000" alt="Hostile"
+  data-curio-library="Nowhere at all"
+  data-curio-folders='["Ext/Evil"]'
+  data-curio-link="javascript:alert(1)"
+  data-curio-src="http://127.0.0.1:8791/png?w=52&h=52&c=aa0000"
+  data-expect='{"sameDestination":true,"width":52,"url":"page","nameMax":120,"tagsMax":52}'>
+<script>
+const img = document.querySelector('[data-case="unreachable"]')
+img.setAttribute('data-curio-title', 'T'.repeat(5000))
+img.setAttribute('data-curio-tags', JSON.stringify(Array.from({ length: 200 }, (_, i) => 'tag' + i + 'x'.repeat(300))))
+img.setAttribute('data-curio-annotation', 'n'.repeat(50000))
+</script>
+</body>
+</html>

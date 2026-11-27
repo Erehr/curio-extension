@@ -1,0 +1,31 @@
+/* Curio's Default Light and Dark; Curio theme mode sets the window's own instead. */
+:root {
+  --surface: #ffffff; --border: #d5dee2; --text: #1e345d; --text-muted: #475b70; --accent: #3b9160; --accent-text: #ffffff; --warning: #b86b00; --hover: #dfe5e9; --button: #e4e9ed; --input: #ffffff; --input-border: rgba(30, 52, 93, 0.16);
+  --ui-font: system-ui, 'Segoe UI', 'Noto Sans', sans-serif; --r: 1;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --surface: #222327; --border: #2b2c31; --text: #eceef0; --text-muted: #a7a9ae; --accent: #3b9160; --accent-text: #ffffff; --warning: #f5a524; --hover: #28292c; --button: #3d3f43; --input: #222327; --input-border: rgba(236, 238, 240, 0.14);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --surface: #222327; --border: #2b2c31; --text: #eceef0; --text-muted: #a7a9ae; --accent: #3b9160; --accent-text: #ffffff; --warning: #f5a524; --hover: #28292c; --button: #3d3f43; --input: #222327; --input-border: rgba(236, 238, 240, 0.14);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; width: 228px; padding: 4px; background: var(--surface); color: var(--text); font: 12.5px/1.3 var(--ui-font); }
+.off { margin: 2px 2px 4px; padding: 5px 8px; border-radius: calc(5px * var(--r)); background: color-mix(in srgb, var(--warning) 16%, transparent); font-size: 11.5px; }
+nav { display: flex; flex-direction: column; gap: 1px; }
+.item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 5px 8px; border: 0; border-radius: calc(5px * var(--r)); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.item:hover, .item:focus-visible { background: var(--hover); outline: none; }
+.item .ico { flex: none; color: var(--text-muted); }
+.item .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item .end { flex: none; color: var(--text-muted); }
+.item .kbd { font: 11px ui-monospace, monospace; opacity: .82; }
+hr { margin: 3px 6px; border: 0; border-top: 1px solid var(--border); }
+.item.mode { cursor: default; }
+.item.mode:hover { background: none; }
+.item select { flex: none; height: 24px; max-width: 120px; padding: 0 5px; border: 1px solid var(--input-border); border-radius: calc(5px * var(--r)); background: var(--input); color: var(--text); font: inherit; font-size: 12px; cursor: pointer; }

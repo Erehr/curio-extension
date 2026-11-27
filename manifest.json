@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Send to Curio",
+  "version": "1.0.0",
+  "description": "Save pictures, media and links from the browser to Curio.",
+  "minimum_chrome_version": "116",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArGWwSyDTw7WxKEN/aIL618W/zvzd3Um/kkV9WSEBlTWsBpmelZ2JnAbCSjiEHb7edBols6sYRRdcBHf0v4Zb4SSiwjl+F5L4z+cvkd+vFtJsRGlVWq4T29wQN3fQH0+lyVhzMYMYDWOzcLx8/x9hrLUqqnpxwopYIH3eJo+EGkMLexbZg6NhQhe2RkkQ69YnZmtwOkBX8IJYaDlMDG9yfXsx08g8Wf4GAskeY9B2Ep3wYPdSysgbzf6Kn4ZRi0KHVkdEJQrzd/44IlnnTKUgs2oWN3YyFiV07FlT9pRWI5MlppKnPeLXcZGLwZ+8ut5qwcYlTZN5tf6MhPcc95asUQIDAQAB",
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "action": { "default_title": "Send to Curio", "default_popup": "popup/popup.html", "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png" } },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "options_ui": { "page": "options/options.html", "open_in_tab": true },
+  "permissions": ["storage", "contextMenus", "offscreen", "scripting", "declarativeNetRequestWithHostAccess", "sidePanel", "cookies"],
+  "side_panel": { "default_path": "panel/panel.html?side=1" },
+  "host_permissions": ["<all_urls>"],
+  "commands": {
+    "_execute_action": { "suggested_key": { "default": "Alt+Shift+C" }, "description": "Open toolbar menu" }
+  },
+  "web_accessible_resources": [{ "resources": ["launch/launch.html", "panel/panel.html"], "matches": ["<all_urls>"] }],
+  "content_scripts": [{ "matches": ["<all_urls>"], "js": ["content/attrs.js", "content/inspect.js", "content/ui.js", "content/content.js", "content/collect.js"], "run_at": "document_start", "all_frames": true, "match_about_blank": true }]
+}

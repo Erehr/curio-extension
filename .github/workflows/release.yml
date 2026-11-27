@@ -1,0 +1,75 @@
+# The extension packed by tools/ext-pack.mjs, from a tag (v*) or by hand: send-to-curio-<version>.zip, which keeps the manifest's key, so an unpacked install keeps the id Curio paired with.
+# A tag must be manifest.json's version, and drafts its GitHub release with notes from the typed commit titles since the previous tag.
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: The tag is manifest.json's version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          v=$(node -p "require('./manifest.json').version")
+          [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "::error::The tag is $GITHUB_REF_NAME but manifest.json says $v"; exit 1; }
+
+      - name: Tests
+        run: npm test
+
+      - name: Pack
+        run: node tools/ext-pack.mjs
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: send-to-curio
+          path: target/*.zip
+
+      # the typed commit titles since the previous tag (feat: ..., fix: ...), grouped by type
+      - name: Release notes
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          prev=$(git describe --tags --abbrev=0 --match 'v*' "$GITHUB_REF_NAME^" 2>/dev/null || true)
+          git log --no-merges --format=%s "${prev:+$prev..}$GITHUB_REF_NAME" > commits.txt
+          node - "$prev" <<'EOF'
+          const fs = require('fs')
+          const prev = process.argv[2]
+          const groups = [['break', 'Breaking changes'], ['security', 'Security'], ['feat', 'New'], ['change', 'Changed'], ['fix', 'Fixed'], ['perf', 'Faster'], ['remove', 'Removed']]
+          const internal = new Set(['docs', 'test', 'build', 'refactor', 'chore', 'ci', 'style'])
+          const found = Object.fromEntries(groups.map(([t]) => [t, []]))
+          const other = []
+          for (const title of fs.readFileSync('commits.txt', 'utf8').split('\n').filter(Boolean)) {
+            const m = title.match(/^(\w+)(?:\([^)]*\))?!?:\s*(.+)$/)
+            if (m && found[m[1]]) found[m[1]].push(m[2])
+            else if (!m || !internal.has(m[1])) other.push(title)
+          }
+          let notes = ''
+          for (const [t, heading] of groups) if (found[t].length) notes += `## ${heading}\n\n${found[t].map((s) => `- ${s}`).join('\n')}\n\n`
+          if (other.length) notes += `## Other\n\n${other.map((s) => `- ${s}`).join('\n')}\n\n`
+          if (!notes) notes = prev ? 'Maintenance release.\n\n' : 'First release.\n\n'
+          notes += 'Unzip and load the folder in `chrome://extensions` (or `edge://extensions`) with Developer mode on: Load unpacked.\n'
+          fs.writeFileSync('notes.md', notes)
+          EOF
+          cat notes.md
+
+      - name: Draft release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v3
+        with:
+          draft: true
+          body_path: notes.md
+          files: target/*.zip

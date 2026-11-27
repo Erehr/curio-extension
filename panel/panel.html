@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Send to Curio</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div id="cardWrap"><div id="card" hidden>
+  <div class="conn">
+  <img class="logo" src="../icons/icon48.png" alt="">
+  <section id="off" class="setup off" hidden>
+    <span id="offText" class="lead"></span>
+    <button id="openCurio" class="primary" type="button">Open Curio</button>
+  </section>
+
+  <section id="setup" class="setup" hidden>
+    <p id="setupText" class="note"></p>
+    <label>Port <input id="port" type="number" min="1" max="65535" value="41733"></label>
+    <div class="bar"><span id="setupStatus" class="note" role="status"></span><button id="pair" class="primary" type="button">Connect</button></div>
+    <div id="pairCode" class="pair-code" hidden></div>
+    <details>
+      <summary>Other ways</summary>
+      <label>Token from Curio's Settings › API <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste API token"></label>
+      <div class="bar"><span></span><button id="connect" type="button">Use token</button></div>
+    </details>
+  </section>
+  </div>
+
+  <main id="form" hidden>
+    <div class="cols">
+      <div class="col left">
+        <div id="drop" tabindex="0">
+          <div id="preview"></div>
+          <div class="hint">Drop or paste a picture, file or link</div>
+          <button id="pick" type="button" class="link">Choose a file</button>
+          <input id="file" type="file" hidden>
+          <div id="what" class="what" hidden></div>
+        </div>
+        <div class="rating-row">
+          <div id="rating" class="stars" role="radiogroup" aria-label="Rating"></div>
+          <div id="flags" class="flags"></div>
+        </div>
+        <input id="name" autocomplete="off" spellcheck="false" placeholder="Name" aria-label="Name">
+        <textarea id="notes" rows="3" placeholder="Notes" aria-label="Notes"></textarea>
+        <div id="tags" class="tagbox"><input id="tagInput" placeholder="Add a tag" autocomplete="off" spellcheck="false" aria-label="Tags"><button id="keepTags" class="icon" type="button" title="Keep tags" aria-label="Keep tags" aria-pressed="false"></button></div>
+        <div id="choices" class="choices"></div>
+        <label id="asLinkRow" class="check" hidden><input id="asLink" type="checkbox"> Save as link</label>
+      </div>
+
+      <div class="col right">
+        <div class="p-head">
+          <span id="folderSearchIcon"></span>
+          <input id="folderFilter" placeholder="Filter folders" spellcheck="false" autocomplete="off" aria-label="Filter folders">
+          <label class="libpick"><span id="libSwatch" class="swatch"></span><select id="library" aria-label="Library"></select></label>
+        </div>
+        <div id="asked" class="banner" hidden><span id="askedText"></span><button id="useAsked" type="button">Use</button></div>
+        <div id="folders" class="p-list" role="listbox" aria-multiselectable="true" aria-label="Folders"></div>
+        <div id="autoTags" class="note auto" hidden></div>
+      </div>
+      <div id="tagPicker" class="pop" hidden>
+        <div class="p-body"><div id="tagGroups" class="p-side"></div><div id="tagRows" class="p-list" role="listbox" aria-label="Tags"></div></div>
+      </div>
+    </div>
+    <footer>
+      <button id="options" class="icon" type="button" title="Options" aria-label="Options"></button>
+      <span class="preset"><select id="preset" aria-label="Preset"></select><input id="presetName" placeholder="Preset name" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Preset name" hidden><button id="presetSave" class="icon" type="button" title="Save preset" aria-label="Save preset"></button><button id="presetDelete" class="icon" type="button" title="Delete preset" aria-label="Delete preset" hidden></button></span>
+      <span id="status" class="note where" role="status"></span>
+      <button id="launchInline" type="button" hidden>Open Curio</button>
+      <button id="cancel" type="button">Cancel</button>
+      <button id="send" class="primary" type="button" disabled title="Send (Enter)">Send</button>
+    </footer>
+  </main>
+
+  <main id="dropCard" hidden>
+    <div id="dropPanel" class="dropArea"><span id="dropGlyph"></span><div id="dropHint">Drop to add details</div></div>
+    <div class="dropRight">
+      <div class="p-head"><span class="dropTitle">Drop on a folder to save</span><label class="libpick"><span id="dropSwatch" class="swatch"></span><select id="dropLibrary" aria-label="Library"></select></label></div>
+      <div id="dropOff" class="dropOff" role="status" hidden></div>
+      <div id="dropStatus" class="note dropStatus" role="status" hidden></div>
+      <div id="dropFolders" class="p-list" aria-label="Folders"></div>
+    </div>
+  </main>
+  </div></div>
+
+  <script src="../curio.js"></script>
+  <script type="module" src="panel.js"></script>
+</body>
+</html>
